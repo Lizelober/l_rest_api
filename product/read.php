@@ -26,9 +26,9 @@ if($num>0){
 	$products_arr["records"]=array();
 
 	// retrieve our table contents
-	// pg_fetch_all() is faster than fetchAll()
+	// fetch() is faster than fetchAll()
 	// http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-	while ($row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC)){
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 		// extract row
 		// this will make $row['name'] to
 		// just $name only
