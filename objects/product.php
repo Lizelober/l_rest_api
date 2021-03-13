@@ -25,7 +25,7 @@ class Product{
 		//select all data
 		$query = "SELECT id, name, description, price, created, modified FROM products";
 		$stmt = $this->conn->prepare($query);
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		//this is how to get number of rows returned
 		$num = $stmt->rowCount();
@@ -53,7 +53,7 @@ class Product{
 		$query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . "";
 
 		$stmt = $this->conn->prepare( $query );
-		$stmt->pg_execute();
+		$stmt->execute();
 		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
 		return $row['total_rows'];
@@ -80,7 +80,7 @@ class Product{
 		$stmt->bindParam(2, $keywords);
 		$stmt->bindParam(3, $keywords);
 
-		$stmt->pg_execute();
+		$stmt->execute();
 		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
 		return $row['total_rows'];
@@ -113,7 +113,7 @@ class Product{
 		$stmt->bindParam(":created", $this->created);
 
 		// execute query
-		if($stmt->pg_execute()){
+		if($stmt->execute()){
 			return true;
 		}else{
 			echo "<pre>";
@@ -143,7 +143,7 @@ class Product{
 		$stmt = $this->conn->prepare($query);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		return $stmt;
 	}
@@ -177,7 +177,7 @@ class Product{
 		$stmt->bindParam(5, $records_per_page, PDO::PARAM_INT);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		return $stmt;
 	}
@@ -211,7 +211,7 @@ class Product{
 		$stmt->bindParam(3, $keywords);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		return $stmt;
 	}
@@ -239,7 +239,7 @@ class Product{
 		$stmt->bindParam(1, $this->category_id);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		return $stmt;
 	}
@@ -267,7 +267,7 @@ class Product{
 		$stmt->bindParam(1, $this->id);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		// get retrieved row
 		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
@@ -302,7 +302,7 @@ class Product{
 		$stmt->bindParam(2, $records_per_page, PDO::PARAM_INT);
 
 		// execute query
-		$stmt->pg_execute();
+		$stmt->execute();
 
 		// return values from database
 		return $stmt;
@@ -340,7 +340,7 @@ class Product{
 		$stmt->bindParam(':id', $this->id);
 
 		// execute the query
-		if($stmt->pg_execute()){
+		if($stmt->execute()){
 			return true;
 		}else{
 			return false;
@@ -363,7 +363,7 @@ class Product{
 		$stmt->bindParam(1, $this->id);
 
 		// execute query
-		if($stmt->pg_execute()){
+		if($stmt->execute()){
 			return true;
 		}
 
@@ -381,7 +381,7 @@ class Product{
 
 		$stmt = $this->conn->prepare($query);
 
-		if($stmt->pg_execute($ids)){
+		if($stmt->execute($ids)){
 			return true;
 		}else{
 			return false;
