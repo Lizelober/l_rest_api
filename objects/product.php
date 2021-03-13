@@ -24,7 +24,7 @@ class Product{
 
 		//select all data
 		$query = "SELECT id, name, description, price, created, modified FROM products";
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 
 		//this is how to get number of rows returned
@@ -52,7 +52,7 @@ class Product{
 	public function count(){
 		$query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . "";
 
-		$stmt = $this->conn->pg_prepare( $query );
+		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
@@ -69,7 +69,7 @@ class Product{
 							ON p.category_id = c.id
 					WHERE p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?";
 
-		$stmt = $this->conn->pg_prepare( $query );
+		$stmt = $this->conn->prepare( $query );
 
 		// sanitize
 		$keywords=htmlspecialchars(strip_tags($keywords));
@@ -96,7 +96,7 @@ class Product{
 					name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
 
 		// prepare query
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// sanitize
 		$this->name=htmlspecialchars(strip_tags($this->name));
@@ -140,7 +140,7 @@ class Product{
 
 		// prepare query statement
 		
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// execute query
 		$stmt->execute();
@@ -163,7 +163,7 @@ class Product{
 				LIMIT ?, ?";
 
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// sanitize
 		$keywords=htmlspecialchars(strip_tags($keywords));
@@ -199,7 +199,7 @@ class Product{
 					p.created DESC";
 		echo $query;
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// sanitize
 		$keywords=htmlspecialchars(strip_tags($keywords));
@@ -233,7 +233,7 @@ class Product{
 					p.created DESC";
 
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// bind id of product to be updated
 		$stmt->bindParam(1, $this->category_id);
@@ -261,7 +261,7 @@ class Product{
 					0,1";
 
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare( $query );
+		$stmt = $this->conn->prepare( $query );
 
 		// bind id of product to be updated
 		$stmt->bindParam(1, $this->id);
@@ -295,7 +295,7 @@ class Product{
 				LIMIT ?, ?";
 
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare( $query );
+		$stmt = $this->conn->prepare( $query );
 
 		// bind variable values
 		$stmt->bindParam(1, $from_record_num, PDO::PARAM_INT);
@@ -323,7 +323,7 @@ class Product{
 					id = :id";
 
 		// prepare query statement
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// sanitize
 		$this->name=htmlspecialchars(strip_tags($this->name));
@@ -354,7 +354,7 @@ class Product{
 		$query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
 
 		// prepare query
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		// sanitize
 		$this->id=htmlspecialchars(strip_tags($this->id));
@@ -379,7 +379,7 @@ class Product{
 		// query to delete multiple records
 		$query = "DELETE FROM " . $this->table_name . " WHERE id IN ({$in_ids})";
 
-		$stmt = $this->conn->pg_prepare($query);
+		$stmt = $this->conn->prepare($query);
 
 		if($stmt->execute($ids)){
 			return true;
