@@ -60,14 +60,9 @@ class Product {
 
 		// select all query
 		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+					id, name, description, price
 				FROM
-					" . $this->table_name . " p
-					LEFT JOIN
-						categories c
-							ON p.category_id = c.id
-				ORDER BY
-					p.created DESC";
+					" . $this->table_name . "";
 
 		// prepare query statement
 		
@@ -88,8 +83,7 @@ class Product {
 				SET
 					name = :name,
 					price = :price,
-					description = :description,
-					category_id = :category_id
+					description = :description
 				WHERE
 					id = :id";
 
@@ -100,14 +94,12 @@ class Product {
 		$this->name=htmlspecialchars(strip_tags($this->name));
 		$this->price=htmlspecialchars(strip_tags($this->price));
 		$this->description=htmlspecialchars(strip_tags($this->description));
-		$this->category_id=htmlspecialchars(strip_tags($this->category_id));
 		$this->id=htmlspecialchars(strip_tags($this->id));
 
 		// bind new values
 		$stmt->bindParam(':name', $this->name);
 		$stmt->bindParam(':price', $this->price);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':category_id', $this->category_id);
 		$stmt->bindParam(':id', $this->id);
 
 		// execute the query
