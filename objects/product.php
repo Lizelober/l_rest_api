@@ -73,6 +73,7 @@ class Product {
 					description = :description
 				WHERE
 					id = :id";
+	    echo "Q = $query <br>";
 
 		// prepare query statement
 		$stmt = $this->conn->prepare($query);
