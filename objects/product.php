@@ -84,9 +84,9 @@ class Product {
 		$this->description=htmlspecialchars(strip_tags($this->description));
 
 		// bind new values
-		$stmt->bindParam(':name', $this->name);
-		$stmt->bindParam(':price', $this->price);
-		$stmt->bindParam(':description', $this->description);
+		// $stmt->bindParam(':name', $this->name);
+		// $stmt->bindParam(':price', $this->price);
+		// $stmt->bindParam(':description', $this->description);
 
 		// execute the query
 		if ($stmt->execute()) {
