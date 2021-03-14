@@ -28,15 +28,12 @@ $category->name = $data->name;
 $category->description = $data->description;
 
 // run query
-if($category->update()){
+if ($category->update()) {
 	echo '{';
 		echo '"message": "Category was updated."';
 	echo '}';
-}
-
-// if update failed
-else{
+} else {
 	echo '{';
 		echo '"message": "Unable to update category."';
 	echo '}';
-}
+} //if ($category->update())

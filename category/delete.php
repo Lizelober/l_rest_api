@@ -24,16 +24,13 @@ $data = json_decode(file_get_contents("php://input"));
 $category->id = $data->id;
 
 // delete category
-if($category->delete()){
+if ($category->delete()) {
 	echo '{';
 		echo '"message": "Product was deleted."';
 	echo '}';
-}
-
-// if delete failed
-else{
+} else {
 	echo '{';
 		echo '"message": "Unable to delete object."';
 	echo '}';
-}
+} //if ($category->delete())
 ?>

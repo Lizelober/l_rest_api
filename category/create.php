@@ -25,16 +25,13 @@ $category->description = $data->description;
 $category->created = date('Y-m-d H:i:s');
 
 // create category
-if($category->create()){
+if ($category->create()) {
 	echo '{';
 		echo '"message": "Category was created."';
 	echo '}';
-}
-
-// if insert failed
-else{
+} else {
 	echo '{';
 		echo '"message": "Unable to create category."';
 	echo '}';
-}
+} //if ($category->create())
 ?>

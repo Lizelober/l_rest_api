@@ -53,7 +53,3 @@ INSERT INTO products (id, name, description, price, category_id, created, modifi
 (42, 'Nike Shoes for Men', 'Nike Shoes', '12999', 3, '2015-12-12 06:47:08', '2015-12-12 05:47:08'),
 (48, 'Bristol Shoes Men', 'Awesome shoes. Seen in movies.', '999', 5, '2016-01-08 06:36:37', '2016-01-08 05:36:37'),
 (60, 'Rolex Watch Men', 'Luxury watch.', '25000', 1, '2016-01-11 15:46:02', '2016-01-11 14:46:02');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

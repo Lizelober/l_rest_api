@@ -19,14 +19,14 @@ $stmt = $category->read();
 $num = $stmt->rowCount();
 
 // check if records
-if($num>0){
+if ($num>0) {
 
 	// products array
 	$categories_arr=array();
 	$categories_arr["records"]=array();
 
 	// retrieve table contents
-	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		// extract row
 		extract($row);
 
@@ -37,16 +37,14 @@ if($num>0){
 		);
 
 		array_push($categories_arr["records"], $category_item);
-	}
+	} //while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 
 	// set response code - 200 OK
     http_response_code(200);
 
 	// show categories data in json format
 	echo json_encode($categories_arr);
-}
-
-else{
+} else {
 
 	// set response code - 404 Not found
 	http_response_code(404);
@@ -55,5 +53,5 @@ else{
     echo json_encode(
 		array("message" => "No categories found.")
 	);
-}
+} //if($num>0)
 ?>

@@ -1,5 +1,5 @@
 <?php
-class Database{
+class Database {
 
 	// specify your own database credentials
 	private $host = "ec2-54-145-249-177.compute-1.amazonaws.com";
@@ -9,18 +9,18 @@ class Database{
 	public $conn;
 
 	// get the database connection
-	public function getConnection(){
+	public function getConnection() {
 
 		$this->conn = null;
 
-		try{
+		try {
 			$this->conn = new PDO("pgsql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
 			$this->conn->exec("set names 'utf8'");
-		}catch(PDOException $exception){
+		} catch (PDOException $exception) {
 			echo "Connection error: " . $exception->getMessage();
-		}
+		} //try
 
 		return $this->conn;
-	}
-}
+	} //public function getConnection()
+} //class Database
 ?>
