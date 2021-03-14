@@ -23,11 +23,16 @@ class Product {
 	function create() {
 
 		// query to insert record
+		// $query = "INSERT INTO
+		// 			" . $this->table_name . "
+		// 		SET
+		// 			name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
+
 		$query = "INSERT INTO
 					" . $this->table_name . "
-				SET
-					name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
-echo "query = $query <br>";
+					('$_POST[name]','$_POST[description]','$_POST[price]','$_POST[category_id]','$_POST[created]')";
+
+		echo "query = $query <br>";
 		// prepare query
 		$stmt = $this->conn->prepare($query);
 

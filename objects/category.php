@@ -67,8 +67,12 @@ class Category {
 	public function create() {
 		// create the category
 		// insert query
-		$query = "INSERT INTO categories
-				SET name = ?, description = ?, created = ?";
+		// $query = "INSERT INTO categories
+		// 		SET name = ?, description = ?, created = ?";
+
+		$query = "INSERT INTO
+		" . $this->table_name . "
+		('$_POST[name]','$_POST[description]','$_POST[created]')";
 
 		// prepare query statement
 		$stmt = $this->conn->prepare($query);
