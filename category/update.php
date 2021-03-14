@@ -10,30 +10,31 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 include_once '../objects/category.php';
 
-// instantiate database and category object
+// instantiate database object
 $database = new Database();
 $db = $database->getConnection();
-
+ 
+// instantiate category object
 $category = new Category($db);
 
-// get id of category to be edited
+// get id 
 $data = json_decode(file_get_contents("php://input"));
 
-// set ID property of category to be edited
+// set ID 
 $category->id = $data->id;
 
 // set category property values
 $category->name = $data->name;
 $category->description = $data->description;
 
-// execute the query
+// run query
 if($category->update()){
 	echo '{';
 		echo '"message": "Category was updated."';
 	echo '}';
 }
 
-// if unable to update the category, tell the user
+// if update failed
 else{
 	echo '{';
 		echo '"message": "Unable to update category."';

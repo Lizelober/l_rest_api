@@ -16,22 +16,22 @@ $db = $database->getConnection();
 
 $category = new Category($db);
 
-// get posted data
+// get data
 $data = json_decode(file_get_contents("php://input"));
 
-// set category property values
+// set values
 $category->name = $data->name;
 $category->description = $data->description;
 $category->created = date('Y-m-d H:i:s');
 
-// create the category
+// create category
 if($category->create()){
 	echo '{';
 		echo '"message": "Category was created."';
 	echo '}';
 }
 
-// if unable to create the category, tell the user
+// if insert failed
 else{
 	echo '{';
 		echo '"message": "Unable to create category."';

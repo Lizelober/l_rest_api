@@ -20,17 +20,17 @@ $category = new Category($db);
 // get category id
 $data = json_decode(file_get_contents("php://input"));
 
-// set category id to be deleted
+// set category id
 $category->id = $data->id;
 
-// delete the category
+// delete category
 if($category->delete()){
 	echo '{';
 		echo '"message": "Product was deleted."';
 	echo '}';
 }
 
-// if unable to delete the category
+// if delete failed
 else{
 	echo '{';
 		echo '"message": "Unable to delete object."';
