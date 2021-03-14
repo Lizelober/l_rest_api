@@ -33,7 +33,7 @@ if ($num>0) {
 		extract($row);
 
 		$product_item=array(
-			"id" => $id,
+			//"id" => $id,
 			"name" => $name,
 			"description" => html_entity_decode($description),
 			"price" => $price
