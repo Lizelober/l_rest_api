@@ -19,17 +19,7 @@ class Product {
 	// create product
 	function create() {
 
-		// query to insert record
-		// $query = "INSERT INTO
-		// 			" . $this->table_name . "
-		// 		SET
-		// 			name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
-
-		$query = "INSERT INTO
-					" . $this->table_name . " (name,price,description)
-					values ('$this->name','$this->price','$this->description')";
-
-		echo "query = $query <br>";
+		$query = "INSERT INTO products (name,price,description) values ('$this->name','$this->price','$this->description')";
 		// prepare query
 		$stmt = $this->conn->prepare($query);
 
@@ -59,10 +49,7 @@ class Product {
 	public function read() {
 
 		// select all query
-		$query = "SELECT
-					id, name, description, price
-				FROM
-					" . $this->table_name . "";
+		$query = "SELECT  name, price, description	FROM products";
 
 		// prepare query statement
 		
@@ -94,13 +81,11 @@ class Product {
 		$this->name=htmlspecialchars(strip_tags($this->name));
 		$this->price=htmlspecialchars(strip_tags($this->price));
 		$this->description=htmlspecialchars(strip_tags($this->description));
-		$this->id=htmlspecialchars(strip_tags($this->id));
 
 		// bind new values
 		$stmt->bindParam(':name', $this->name);
 		$stmt->bindParam(':price', $this->price);
 		$stmt->bindParam(':description', $this->description);
-		$stmt->bindParam(':id', $this->id);
 
 		// execute the query
 		if ($stmt->execute()) {
