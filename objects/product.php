@@ -20,71 +20,71 @@ class Product{
 	}
 
 	// used to export records to csv
-	public function export_CSV(){
+	// public function export_CSV(){
 
-		//select all data
-		$query = "SELECT id, name, description, price, created, modified FROM products";
-		$stmt = $this->conn->prepare($query);
-		$stmt->execute();
+	// 	//select all data
+	// 	$query = "SELECT id, name, description, price, created, modified FROM products";
+	// 	$stmt = $this->conn->prepare($query);
+	// 	$stmt->execute();
 
-		//this is how to get number of rows returned
-		$num = $stmt->rowCount();
+	// 	//this is how to get number of rows returned
+	// 	$num = $stmt->rowCount();
 
-		$out = "ID,Name,Description,Price,Created,Modified\n";
+	// 	$out = "ID,Name,Description,Price,Created,Modified\n";
 
-		if($num>0){
-			//retrieve our table contents
-			//pg_fetch_all() is faster than fetchAll()
-			//http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
-			while ($row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC)){
-				//extract row
-				//this will make $row['name'] to
-				//just $name only
-				extract($row);
-				$out.="{$id},\"{$name}\",\"{$description}\",{$price},{$created},{$modified}\n";
-			}
-		}
+	// 	if($num>0){
+	// 		//retrieve our table contents
+	// 		//pg_fetch_all() is faster than fetchAll()
+	// 		//http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
+	// 		while ($row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC)){
+	// 			//extract row
+	// 			//this will make $row['name'] to
+	// 			//just $name only
+	// 			extract($row);
+	// 			$out.="{$id},\"{$name}\",\"{$description}\",{$price},{$created},{$modified}\n";
+	// 		}
+	// 	}
 
-		return $out;
-	}
+	// 	return $out;
+	// }
 
-	// used for paging products
-	public function count(){
-		$query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . "";
+	// // used for paging products
+	// public function count(){
+	// 	$query = "SELECT COUNT(*) as total_rows FROM " . $this->table_name . "";
 
-		$stmt = $this->conn->prepare( $query );
-		$stmt->execute();
-		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
+	// 	$stmt = $this->conn->prepare( $query );
+	// 	$stmt->execute();
+	// 	$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
-		return $row['total_rows'];
-	}
+	// 	return $row['total_rows'];
+	// }
 
-	// used for paging products
-	public function countSearch($keywords){
+	// // used for paging products
+	// public function countSearch($keywords){
 
-		$query = "SELECT COUNT(*) as total_rows
-					FROM
-						" . $this->table_name . " p
-						LEFT JOIN categories c
-							ON p.category_id = c.id
-					WHERE p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?";
+	// 	$query = "SELECT COUNT(*) as total_rows
+	// 				FROM
+	// 					" . $this->table_name . " p
+	// 					LEFT JOIN categories c
+	// 						ON p.category_id = c.id
+	// 				WHERE p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?";
 
-		$stmt = $this->conn->prepare( $query );
+	// 	$stmt = $this->conn->prepare( $query );
 
-		// sanitize
-		$keywords=htmlspecialchars(strip_tags($keywords));
-		$keywords = "%{$keywords}%";
+	// 	// sanitize
+	// 	$keywords=htmlspecialchars(strip_tags($keywords));
+	// 	$keywords = "%{$keywords}%";
 
-		// bind variable values
-		$stmt->bindParam(1, $keywords);
-		$stmt->bindParam(2, $keywords);
-		$stmt->bindParam(3, $keywords);
+	// 	// bind variable values
+	// 	$stmt->bindParam(1, $keywords);
+	// 	$stmt->bindParam(2, $keywords);
+	// 	$stmt->bindParam(3, $keywords);
 
-		$stmt->execute();
-		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
+	// 	$stmt->execute();
+	// 	$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
-		return $row['total_rows'];
-	}
+	// 	return $row['total_rows'];
+	// }
 
 	// create product
 	function create(){
@@ -149,164 +149,164 @@ class Product{
 	}
 
 	// search products with pagination
-	function searchPaging($keywords, $from_record_num, $records_per_page){
+	// function searchPaging($keywords, $from_record_num, $records_per_page){
 
-		// select all query
-		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-				FROM
-					" . $this->table_name . " p
-					LEFT JOIN categories c
-						ON p.category_id = c.id
-				WHERE p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?
-				ORDER BY p.created DESC
-				LIMIT ?, ?";
+	// 	// select all query
+	// 	$query = "SELECT
+	// 				c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+	// 			FROM
+	// 				" . $this->table_name . " p
+	// 				LEFT JOIN categories c
+	// 					ON p.category_id = c.id
+	// 			WHERE p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?
+	// 			ORDER BY p.created DESC
+	// 			LIMIT ?, ?";
 
-		// prepare query statement
-		$stmt = $this->conn->prepare($query);
+	// 	// prepare query statement
+	// 	$stmt = $this->conn->prepare($query);
 
-		// sanitize
-		$keywords=htmlspecialchars(strip_tags($keywords));
-		$keywords = "%{$keywords}%";
+	// 	// sanitize
+	// 	$keywords=htmlspecialchars(strip_tags($keywords));
+	// 	$keywords = "%{$keywords}%";
 
-		// bind variable values
-		$stmt->bindParam(1, $keywords);
-		$stmt->bindParam(2, $keywords);
-		$stmt->bindParam(3, $keywords);
-		$stmt->bindParam(4, $from_record_num, PDO::PARAM_INT);
-		$stmt->bindParam(5, $records_per_page, PDO::PARAM_INT);
+	// 	// bind variable values
+	// 	$stmt->bindParam(1, $keywords);
+	// 	$stmt->bindParam(2, $keywords);
+	// 	$stmt->bindParam(3, $keywords);
+	// 	$stmt->bindParam(4, $from_record_num, PDO::PARAM_INT);
+	// 	$stmt->bindParam(5, $records_per_page, PDO::PARAM_INT);
 
-		// execute query
-		$stmt->execute();
+	// 	// execute query
+	// 	$stmt->execute();
 
-		return $stmt;
-	}
+	// 	return $stmt;
+	// }
 
-	// search products
-	function search($keywords){
+	// // search products
+	// function search($keywords){
 
-		// select all query
-		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-				FROM
-					" . $this->table_name . " p
-					LEFT JOIN
-						categories c
-							ON p.category_id = c.id
-				WHERE
-					p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?
-				ORDER BY
-					p.created DESC";
-		echo $query;
-		// prepare query statement
-		$stmt = $this->conn->prepare($query);
+	// 	// select all query
+	// 	$query = "SELECT
+	// 				c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+	// 			FROM
+	// 				" . $this->table_name . " p
+	// 				LEFT JOIN
+	// 					categories c
+	// 						ON p.category_id = c.id
+	// 			WHERE
+	// 				p.name LIKE ? OR p.description LIKE ? OR c.name LIKE ?
+	// 			ORDER BY
+	// 				p.created DESC";
+	// 	echo $query;
+	// 	// prepare query statement
+	// 	$stmt = $this->conn->prepare($query);
 
-		// sanitize
-		$keywords=htmlspecialchars(strip_tags($keywords));
-		$keywords = "%{$keywords}%";
+	// 	// sanitize
+	// 	$keywords=htmlspecialchars(strip_tags($keywords));
+	// 	$keywords = "%{$keywords}%";
 
-		// bind
-		$stmt->bindParam(1, $keywords);
-		$stmt->bindParam(2, $keywords);
-		$stmt->bindParam(3, $keywords);
+	// 	// bind
+	// 	$stmt->bindParam(1, $keywords);
+	// 	$stmt->bindParam(2, $keywords);
+	// 	$stmt->bindParam(3, $keywords);
 
-		// execute query
-		$stmt->execute();
+	// 	// execute query
+	// 	$stmt->execute();
 
-		return $stmt;
-	}
+	// 	return $stmt;
+	// }
 
-	// read products
-	function readAllProductsByCategoryId(){
+	// // read products
+	// function readAllProductsByCategoryId(){
 
-		// select all query
-		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-				FROM
-					" . $this->table_name . " p
-					LEFT JOIN
-						categories c
-							ON p.category_id = c.id
-				WHERE
-					p.category_id = ?
-				ORDER BY
-					p.created DESC";
+	// 	// select all query
+	// 	$query = "SELECT
+	// 				c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+	// 			FROM
+	// 				" . $this->table_name . " p
+	// 				LEFT JOIN
+	// 					categories c
+	// 						ON p.category_id = c.id
+	// 			WHERE
+	// 				p.category_id = ?
+	// 			ORDER BY
+	// 				p.created DESC";
 
-		// prepare query statement
-		$stmt = $this->conn->prepare($query);
+	// 	// prepare query statement
+	// 	$stmt = $this->conn->prepare($query);
 
-		// bind id of product to be updated
-		$stmt->bindParam(1, $this->category_id);
+	// 	// bind id of product to be updated
+	// 	$stmt->bindParam(1, $this->category_id);
 
-		// execute query
-		$stmt->execute();
+	// 	// execute query
+	// 	$stmt->execute();
 
-		return $stmt;
-	}
+	// 	return $stmt;
+	// }
 
-	// used when filling up the update product form
-	function readOne(){
+	// // used when filling up the update product form
+	// function readOne(){
 
-		// query to read single record
-		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-				FROM
-					" . $this->table_name . " p
-					LEFT JOIN
-						categories c
-							ON p.category_id = c.id
-				WHERE
-					p.id = ?
-				LIMIT
-					0,1";
+	// 	// query to read single record
+	// 	$query = "SELECT
+	// 				c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+	// 			FROM
+	// 				" . $this->table_name . " p
+	// 				LEFT JOIN
+	// 					categories c
+	// 						ON p.category_id = c.id
+	// 			WHERE
+	// 				p.id = ?
+	// 			LIMIT
+	// 				0,1";
 
-		// prepare query statement
-		$stmt = $this->conn->prepare( $query );
+	// 	// prepare query statement
+	// 	$stmt = $this->conn->prepare( $query );
 
-		// bind id of product to be updated
-		$stmt->bindParam(1, $this->id);
+	// 	// bind id of product to be updated
+	// 	$stmt->bindParam(1, $this->id);
 
-		// execute query
-		$stmt->execute();
+	// 	// execute query
+	// 	$stmt->execute();
 
-		// get retrieved row
-		$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
+	// 	// get retrieved row
+	// 	$row = $stmt->pg_fetch_all(PDO::FETCH_ASSOC);
 
-		// set values to object properties
-		$this->name = $row['name'];
-		$this->price = $row['price'];
-		$this->description = $row['description'];
-		$this->category_id = $row['category_id'];
-		$this->category_name = $row['category_name'];
-	}
+	// 	// set values to object properties
+	// 	$this->name = $row['name'];
+	// 	$this->price = $row['price'];
+	// 	$this->description = $row['description'];
+	// 	$this->category_id = $row['category_id'];
+	// 	$this->category_name = $row['category_name'];
+	// }
 
-	// read products with pagination
-	public function readPaging($from_record_num, $records_per_page){
+	// // read products with pagination
+	// public function readPaging($from_record_num, $records_per_page){
 
-		// select query
-		$query = "SELECT
-					c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-				FROM
-					" . $this->table_name . " p
-					LEFT JOIN
-						categories c
-							ON p.category_id = c.id
-				ORDER BY p.created DESC
-				LIMIT ?, ?";
+	// 	// select query
+	// 	$query = "SELECT
+	// 				c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+	// 			FROM
+	// 				" . $this->table_name . " p
+	// 				LEFT JOIN
+	// 					categories c
+	// 						ON p.category_id = c.id
+	// 			ORDER BY p.created DESC
+	// 			LIMIT ?, ?";
 
-		// prepare query statement
-		$stmt = $this->conn->prepare( $query );
+	// 	// prepare query statement
+	// 	$stmt = $this->conn->prepare( $query );
 
-		// bind variable values
-		$stmt->bindParam(1, $from_record_num, PDO::PARAM_INT);
-		$stmt->bindParam(2, $records_per_page, PDO::PARAM_INT);
+	// 	// bind variable values
+	// 	$stmt->bindParam(1, $from_record_num, PDO::PARAM_INT);
+	// 	$stmt->bindParam(2, $records_per_page, PDO::PARAM_INT);
 
-		// execute query
-		$stmt->execute();
+	// 	// execute query
+	// 	$stmt->execute();
 
-		// return values from database
-		return $stmt;
-	}
+	// 	// return values from database
+	// 	return $stmt;
+	// }
 
 	// update the product
 	function update(){
@@ -372,21 +372,21 @@ class Product{
 	}
 
 	// delete selected products
-	public function deleteSelected($ids){
+	// public function deleteSelected($ids){
 
-		$in_ids = str_repeat('?,', count($ids) - 1) . '?';
+	// 	$in_ids = str_repeat('?,', count($ids) - 1) . '?';
 
-		// query to delete multiple records
-		$query = "DELETE FROM " . $this->table_name . " WHERE id IN ({$in_ids})";
+	// 	// query to delete multiple records
+	// 	$query = "DELETE FROM " . $this->table_name . " WHERE id IN ({$in_ids})";
 
-		$stmt = $this->conn->prepare($query);
+	// 	$stmt = $this->conn->prepare($query);
 
-		if($stmt->execute($ids)){
-			return true;
-		}else{
-			return false;
-		}
-	}
+	// 	if($stmt->execute($ids)){
+	// 		return true;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
 
 }
 ?>
