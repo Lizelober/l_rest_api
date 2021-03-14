@@ -30,7 +30,7 @@ class Product {
 
 		$query = "INSERT INTO
 					" . $this->table_name . "
-					values ($this->name,$this->price,$this->description,$this->category_id,$this->created)";
+					values ('$this->name','$this->price','$this->description',$this->category_id,'$this->created')";
 
 		echo "query = $query <br>";
 		// prepare query
