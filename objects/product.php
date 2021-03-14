@@ -68,9 +68,9 @@ class Product {
 		$query = "UPDATE
 					" . $this->table_name . "
 				SET
-					name = $this->name,
-					price = $this->price,
-					description = $this->description
+					name = '$this->name',
+					price = '$this->price',
+					description = '$this->description'
 				WHERE
 					id = $this->id";
 	    echo "Q = $query <br>";
