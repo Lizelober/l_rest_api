@@ -29,8 +29,8 @@ class Product {
 		// 			name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
 
 		$query = "INSERT INTO
-					" . $this->table_name . " (name,price,description,category_id)
-					values ('$this->name','$this->price','$this->description',$this->category_id)";
+					" . $this->table_name . " (name,price,description)
+					values ('$this->name','$this->price','$this->description')";
 
 		echo "query = $query <br>";
 		// prepare query
