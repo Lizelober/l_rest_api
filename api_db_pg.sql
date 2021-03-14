@@ -1,9 +1,9 @@
 
 CREATE TABLE IF NOT EXISTS products (
   id serial primary key,
-  name varchar(32) NOT NULL,
-  description text NOT NULL,
-  price decimal(10,0) NOT NULL);
+  name varchar(32),
+  description text,
+  price decimal(10,0));
 
 --
 -- Dumping data for table products
