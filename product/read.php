@@ -36,9 +36,7 @@ if ($num>0) {
 			"id" => $id,
 			"name" => $name,
 			"description" => html_entity_decode($description),
-			"price" => $price,
-			"category_id" => $category_id,
-			"category_name" => $category_name
+			"price" => $price
 		);
 
 		array_push($products_arr["records"], $product_item);
